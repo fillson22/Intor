@@ -1,9 +1,27 @@
 <% if user_signed_in? %> 
  <div> Welcome <%= current_user.email %> </div> 
   <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+  <hr>
+
+  <h1> Місця зберігання: </h1>
+  <%= @item_places.map { |item| item.name }.join(", ") %>
+  <p> <%= link_to "Нове місце", new_item_place_path %> </p>
+
+  <h1> Речі: </h1>
+  <%= @items.map { |item| item.name }.join(", ") %>
+  <p> <%= link_to "Нова річ", new_item_path %> </p>
+
+  <h1> Розміщення речей: </h1>
+  <p> <%= link_to "Покласти річ", new_item_storage_path %> </p>
+
+  <h1> Речі на місцях зберігання: </h1>
+  <% @item_storages.each do |item_storage| %>
+    <p> <%= item_storage.item.name %>
+    <%= item_storage.item_place.name %>
+  <% end %>
+
 <% else %>
   <%= button_to "Sign in", new_user_session_path %> 
+  <h2> Привіт друже !</h2>
+  <p> Ласкаво просимо до Intor - вашого надійного помічника для організації речей. </p>
 <% end %>
-
-<h2> Привіт друже !</h2>
-<p> Ласкаво просимо до Intor - вашого надійного помічника для організації речей. </p>

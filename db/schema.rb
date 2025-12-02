@@ -10,13 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_29_032253) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_02_181438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "items", force: :cascade do |t|
+  create_table "item_places", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "item_storages", primary_key: ["item_id", "item_place_id"], force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "item_id", null: false
+    t.bigint "item_place_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_item_storages_on_item_id"
+    t.index ["item_place_id"], name: "index_item_storages_on_item_place_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "history", comment: "Історія пересування речі"
+    t.string "name"
+    t.decimal "quantity", precision: 6, scale: 2, comment: "Кількість речей, precision: 6 - цифр всього разом, scale: 2 - кількість після коми"
     t.datetime "updated_at", null: false
   end
 
@@ -31,4 +48,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_29_032253) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "item_storages", "item_places"
+  add_foreign_key "item_storages", "items"
 end
