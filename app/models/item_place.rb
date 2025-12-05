@@ -1,5 +1,7 @@
 class ItemPlace < ApplicationRecord
-has_many :item_storages, dependent: :destroy
-has_many :items, through: :item_storages
+  has_many :item_storages, dependent: :destroy
+  has_many :items, through: :item_storages
+
+  validates :name, presence: true
 
 end

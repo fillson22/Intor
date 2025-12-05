@@ -20,7 +20,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_02_181438) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "item_storages", primary_key: ["item_id", "item_place_id"], force: :cascade do |t|
+  create_table "item_storages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "item_id", null: false
     t.bigint "item_place_id", null: false

@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  before_action :find_item, only: [:edit, :update, :destroy]
+
   def index
     @items = Item.all
     @item_places = ItemPlace.all
@@ -18,10 +20,32 @@ class ItemsController < ApplicationController
     end
   end
 
+  def edit; end
+  
+  def update
+    if @item.update item_params
+      redirect_to items_path, notice: 'Річ оновлено'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    if @item.destroy
+      redirect_to items_path, notice: 'Річ видалено'
+    else
+      redirect_to items_path, alert: 'Не вдалося видалити річ'
+    end
+  end
+
 private
 
   def item_params
     params.require(:item).permit(:name, :quantity, :history)
+  end
+
+  def find_item
+    @item = Item.find params[:id]
   end
 
 end

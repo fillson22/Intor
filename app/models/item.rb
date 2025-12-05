@@ -4,4 +4,6 @@ class Item < ApplicationRecord
 
   serialize :history, coder: JSON, type: Array
 
+  validates :name, presence: true
+  validates :quantity, numericality: { greater_than_or_equal_to: 0 } #недопускаємо від'ємну кількість
 end

@@ -4,20 +4,32 @@
   <hr>
 
   <h1> Місця зберігання: </h1>
-  <%= @item_places.map { |item| item.name }.join(", ") %>
+  <% @item_places.each do |item_place| %>
+    <%= item_place.name %>
+    <%= link_to "Редагувати", edit_item_place_path(item_place) %>
+    <%= button_to "Видалити", item_place_path(item_place), method: :delete, data: { confirm: "Ви впевнені?" } %>
+  <% end %>
   <p> <%= link_to "Нове місце", new_item_place_path %> </p>
 
   <h1> Речі: </h1>
-  <%= @items.map { |item| item.name }.join(", ") %>
+  <% @items.each do |item| %>
+    <%= item.name %>
+    <%= item.quantity %>
+    <%= link_to "Редагувати", edit_item_path(item) %>
+    <%= button_to "Видалити", item_path(item), method: :delete, data: { confirm: "Ви впевнені?" } %>
+  <% end %>
   <p> <%= link_to "Нова річ", new_item_path %> </p>
 
   <h1> Розміщення речей: </h1>
   <p> <%= link_to "Покласти річ", new_item_storage_path %> </p>
 
+
   <h1> Речі на місцях зберігання: </h1>
   <% @item_storages.each do |item_storage| %>
-    <p> <%= item_storage.item.name %>
+    <%= item_storage.item.name %>
     <%= item_storage.item_place.name %>
+    <%= link_to "Перекласти річ", edit_item_storage_path(item_storage) %>
+
   <% end %>
 
 <% else %>
