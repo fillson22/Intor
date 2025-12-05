@@ -1,24 +1,3 @@
 <h1>Редагувати дані</h1>
 
-<%= form_with model: @item_place do |form| %>
-  <% if @item_place.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@item_place.errors.count, "error") %> prohibited this item_place from being saved:</h2>
-
-      <ul>
-        <% @item_place.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit "Зберегти зміни" %>
-  </div>
-<% end %>
+<%= render 'newitemplace', item_place: @item_place %>
