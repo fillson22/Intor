@@ -38,6 +38,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def search
+  @item_places = ItemPlace.all
+  @query = params[:q]
+  @items = Item.where("name LIKE ?", "%#{@query}%")
+end
+
+
 private
 
   def item_params

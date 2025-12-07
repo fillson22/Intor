@@ -1,0 +1,11 @@
+<h1>Результати пошуку</h1>
+
+<% if @items.any? %>
+  <ul>
+    <% @items.each do |item| %>
+      <li><%= item.name %> (кількість: <%= item.quantity %>)</li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Нічого не знайдено.</p>
+<% end %>

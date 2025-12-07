@@ -1,33 +1,43 @@
-<nav class="navbar navbar-expand-sm bg-body-tertiary">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- Лого -->
+    <%= link_to "Intor", root_path, class: "navbar-brand" %>
+
+    <!-- Кнопка для мобільного меню -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+      aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <!-- Основне меню -->
+    <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Головна -->
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          <%= link_to "Головна", root_path, class: "nav-link" %>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+
+      <!-- Меню пошуку -->
+      <% if user_signed_in? %>
+        <%= form_with url: search_path, method: :get, local: true, class: "d-flex" do |form| %>
+          <%= form.text_field :q, class: "form-control me-2", placeholder: "Пошук..." %>
+          <%= form.submit "Знайти", class: "btn btn-outline-light" %>
+        <% end %>
+      <% end %>
+
+      <!-- Аутентифікація -->
+      <ul class="navbar-nav ms-3">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= button_to "Вийти", destroy_user_session_path, method: :delete, class: "nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Увійти", new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </nav>
