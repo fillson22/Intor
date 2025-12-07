@@ -12,11 +12,11 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.create item_params
+    @item = Item.new item_params
     if @item.save
       redirect_to items_path, notice: 'Річ створено'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

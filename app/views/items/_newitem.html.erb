@@ -1,26 +1,31 @@
-<%= form_with model: item do |form| %>
-    <% if @item.errors.any? %>
-        <div id="error_explanation">
-            <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
-            <ul>
-                <% @item.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                <% end %>
-            </ul>
-        </div>
-    <% end %>
-
-    <div class="field">
-        <%= form.label "Назва" %>
-        <%= form.text_field :name, placeholder: "Введіть назву..." %>
-    </div>
-
-    <div class="field">
-        <%= form.label "Кількість" %>
-        <%= form.number_field :quantity, step: 0.5, min: 0, placeholder: "Зазначте кількість..." %>
-    </div>
-
-    <div class="actions">
-        <%= form.submit "Зберегти" %>
-    </div>
+<div class="container mt-4">
+  <%= form_with(model: item, local: true, class: "needs-validation") do |form| %>
+  
+    <% if item.errors.any? %>
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">
+      <%= pluralize(item.errors.count, "помилки") %> не дозволили зберегти річ:
+    </h4>
+    <ul class="mb-0">
+      <% item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
+
+
+    <div class="mb-3">
+      <%= form.label :name, "Назва", class: "form-label" %>
+      <%= form.text_field :name, class: "form-control", placeholder: "Введіть назву" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :quantity, "Кількість", class: "form-label" %>
+      <%= form.number_field :quantity, class: "form-control", min: 1 %>
+    </div>
+
+    <%= form.submit "Зберегти", class: "btn btn-primary" %>
+    <%= link_to "Назад", items_path, class: "btn btn-secondary ms-2" %>
+  <% end %>
+</div>
