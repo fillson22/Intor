@@ -1,19 +1,24 @@
-<div class="container mt-4">
-  <% if user_signed_in? %> 
+<div class="container">
+<% if user_signed_in? %> 
   <div class="row">
-    <div class="col-md-6">
-      <h5> Місця зберігання: </h5>
+
+    <div class="col-3">
+      <%= link_to "Нова річ", new_item_path, class: "btn btn-primary" %>
       <%= link_to "Додати місце", new_item_place_path, class: "btn btn-primary" %>
-      <div class="d-flex">
-        <% @item_places.each do |item_place| %>
-          <%= link_to item_place.name %>
-          <%= link_to "Редагувати", edit_item_place_path(item_place), class: "btn  btn-primary" %>
-          <%= button_to "Видалити", item_place_path(item_place), 
-              method: :delete, data: { confirm: "Ви впевнені?" }, class: "btn btn-primary" %>
-        <% end %>
-      </div>    
     </div>
-    <div class="col-md-6">  
+
+    <div class="col-9 text-center">
+      <h5> Місця зберігання: </h5>
+      <% @item_places.each do |item_place| %>
+        <%= link_to item_place.name, item_place_path(item_place), class: "btn btn-success m-2" %>
+      <% end %>
+    </div>
+  </div>
+
+<hr/>
+
+  <div class="row">
+    <div class="col">
       <h1> Речі: </h1>
       <% @items.each do |item| %>
         <%= item.name %>
@@ -21,26 +26,40 @@
         <%= link_to "Редагувати", edit_item_path(item) %>
         <%= button_to "Видалити", item_path(item), method: :delete, data: { confirm: "Ви впевнені?" } %>
       <% end %>
-      <p> <%= link_to "Нова річ", new_item_path %> </p>
     </div>
   </div>
-    <h1> Розміщення речей: </h1>
-    <p> <%= link_to "Покласти річ", new_item_storage_path %> </p>
 
+<hr/>
 
-    <h1> Речі на місцях зберігання: </h1>
-    <% @item_storages.each do |item_storage| %>
-      <%= item_storage.item.name %>
-      <%= item_storage.item_place.name %>
-      <%= link_to "Перекласти річ", edit_item_storage_path(item_storage) %>
+  <div class="row">
+    <div class="col">
+      <h1> Розміщення речей: </h1>
+      <p> <%= link_to "Покласти річ", new_item_storage_path %> </p>
+    </div>
+  </div>
 
-    <% end %>
+<hr/>  
 
-  <% else %>
-    <div class="container mt-5 text-center">
+  <div class="row">
+    <div class="col">
+      <h1> Речі на місцях зберігання: </h1>
+      <% @item_storages.each do |item_storage| %>
+        <%= item_storage.item.name %>
+        <%= item_storage.item_place.name %>
+        <%= link_to "Перекласти річ", edit_item_storage_path(item_storage) %>
+      <% end %>
+    </div>
+  </div>
+
+<% else %>
+
+  <div class="row">
+    <div class="col">
       <h2> Привіт друже !</h2>
       <p> Ласкаво просимо до Intor - вашого надійного помічника для організації речей. </p>
       <p> Будь ласка, увійди в аккаунт або створи новий, щоб почати керувати своїми речами. </p>
     </div>
-  <% end %>
+  </div>
+  
+<% end %>
 </div>
